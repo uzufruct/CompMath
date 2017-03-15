@@ -103,55 +103,6 @@ def seidel(A, b, eps):
 
 
 def fpi(A, b, eps):
-    n = len(A)
-    x = np.zeros(n)
-    x_iter = np.zeros(n)
-
-    #Проверка на вырожденность
-    for i in range(n):
-        s1 = sum(abs(A[i][j]) for j in range(i))
-        s2 = sum(abs(A[i][j]) for j in range(i + 1, n))
-        if abs(A[i][i]) < (s1 + s2):
-            raise ValueError("Matrix is singular.", i)
-
-    for i in range(n):
-        if A[i][i] != 0:
-            b[i] /= A[i][i]
-            for j in range(n):
-                A[i][j] /= A[i][i]
-
-    for i in range(n):
-        A[i][i] = 0
-
-    converge = False
-    while not converge:
-        for i in range(n):
-            for j in range(n):
-                x_iter[i] = x_iter[i] - A[i][j] * x[j]
-        for i in range(n):
-            x[i] = b[i] + x_iter[i]
-            x_iter[i] = 0
-        y = (x - x_iter).copy()
-        converge = abs(y[0:n]).argmax() <= eps
-
-
-
-
-    # converge = False
-    # while not converge:
-    #     x_old = x.copy()
-    #     for i in range(n):
-    #         s1 = sum(A[i][j] * x_old[j] for j in range(n))
-    #         # s2 = sum(A[i][j] * x_old[j] for j in range(i + 1, n))
-    #         x[i] = (b[i] - s1) / A[i][i]
-    #     # converge = sqrt(sum((x[i] - x_old[i]) ** 2 for i in range(n))) <= eps
-    #     y = (x - x_old).copy()
-    #     converge = abs(y[0:n]).argmax() <= eps
-
-    return x
-
-
-def iter(A, b, eps):
     limit = 100
     diagonal = A.diagonal()
 

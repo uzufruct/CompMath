@@ -18,7 +18,7 @@ if __name__ == "__main__":
     # print('\n------Seidel----------\n')
     # print(s.seidel(np.copy(A_part), np.copy(b_part), 0.001))
     # print('\n-------FPI------------\n')
-    # print(s.iter(np.copy(A_part), np.copy(b_part), 0.001))
+    # print(s.fpi(np.copy(A_part), np.copy(b_part), 0.001))
     def fun(x):
         return math.sin(x)
 
