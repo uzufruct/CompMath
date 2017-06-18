@@ -6,7 +6,7 @@ def doublecount(fun, a, b, h, eps):
     sum2 = 0
     delta = 4 * eps
     h1 = 2 * h
-    while delta >= 3 * eps:
+    while delta >= eps:
         sum1 = 0
         sum2 = 0
         h1 /= 2
@@ -26,9 +26,8 @@ def doublecount(fun, a, b, h, eps):
         sum2 += (fun(a) + fun(b)) / 2
         sum2 *= h2
         delta = fabs(sum2 - sum1)
-        print("Delta:", delta)
-    pepe = delta / 3
-    print("Eps:", "%3.6f" % pepe)
+        # print("Delta:", delta)
+    print("Eps:", "%3.6f" % delta)
     print("Previous sum:", sum1)
     return sum2
 
@@ -37,7 +36,7 @@ def simpson(fun, a, b, h, eps):
     sum2 = 0
     delta = 16 * eps
     h1 = 2 * h
-    while delta >= 15 * eps:
+    while delta >= eps:
         h1 /= 2
         h2 = h1 / 2
         n1 = int((b - a) / h1)
@@ -71,8 +70,7 @@ def simpson(fun, a, b, h, eps):
         sum2 *= h2 / 3
 
         delta = fabs(sum2 - sum1)
-        print("Delta:", delta)
-    pepe = delta / 15
-    print("Eps:", "%3.6f" % pepe)
+        # print("Delta:", delta)
+    print("Eps:", "%3.6f" % delta)
     print("Previous sum:", sum1)
     return sum2

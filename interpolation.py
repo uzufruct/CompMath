@@ -1,7 +1,7 @@
 # n - interpolation power
+from scipy import linalg
+import math
 import numpy as np
-from random import random
-
 
 def lagrange(tx, ty, x, n):
     y = 0
@@ -27,7 +27,7 @@ def lagrange(tx, ty, x, n):
             if i != j:
                 q *= (x - ax[j])
                 q /= (ax[i] - ax[j])
-        y += ay[i]*q
+        y += ay[i] * q
     return y
 
 
@@ -52,13 +52,38 @@ def aitken(tx, ty, x, n):
         else:
             k = 1 / (ax[i] - ax[j])
             return k * (poly(i, j - 1, x) * (x - ax[j]) - poly(i + 1, j, x) * (x - ax[i]))
+
     return poly(0, n, x)
 
-def newton(tx, ty, x, n):
-    q = (x - tx[0]) / n
-    p = ty[0]
-    k = 1
-    for i in range(1, n):
-        k /= i
-        p += k*ty[i]*q
-        q *= (q - 1)
+
+def newton(x, y, u):
+    '''
+    Parameters
+    ----------
+    x : list of floats
+    y : list of floats
+    u : float
+
+    Returns
+    -------
+    float
+        an estimate at the point u
+    '''
+
+    def product(a):
+        p = 1
+        for i in a:
+            p *= i
+        return p
+
+    g = y[:]
+    s = g[0]
+    for i in range(len(y) - 1):
+        g = [(g[j + 1] - g[j]) / (x[j + i + 1] - x[j]) for j in range(len(g) - 1)]
+        s += g[0] * product(u - x[j] for j in range(i + 1))
+    return s
+
+
+# def cubic_spline(tx, ty, x, n):
+
+
